@@ -50,6 +50,8 @@ Commit and push to the repository often while you make progress towards the solu
 to add meaningful commit messages.
 
 ### Create environment
+#### One can use conda or pyenv to create a python environment and use with mlflow.
+A. **conda**<br>
 Make sure to have conda installed and ready, then create a new environment using the ``environment.yml``
 file provided in the root of the repository and activate it:
 
@@ -57,6 +59,16 @@ file provided in the root of the repository and activate it:
 > conda env create -f environment.yml
 > conda activate nyc_airbnb_dev
 ```
+B. **pyenv** <br>
+Make sure you have pyenv and virtualenv. Refer: [pyenv tutorial](https://realpython.com/intro-to-pyenv/#virtual-environments-and-pyenv).
+Pyenv also allows to create python environments for multiple python versions.
+
+```
+> pyenv virtualenv <python_version> <environment_name>
+> pyenv activate <environment_name>
+```
+NOTE: If you are using pyenv then instead of conda,yml create python_env.yml and update this in MLproject file.
+Refer: [mlflow environment](https://www.mlflow.org/docs/latest/projects.html#mlproject-specify-environment)
 
 ### Get API key for Weights and Biases
 Let's make sure we are logged in to Weights & Biases. Get your API key from W&B by going to 
