@@ -37,6 +37,12 @@ def go(args):
         # Convert last_review to datetime
         logging.info("cast last_review date to datetime type")
         df['last_review'] = pd.to_datetime(df['last_review'])
+
+        # limit the boundaries 
+        logging.info("Filtering latitude/longitude range")
+        valid_boundary_indices = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+        df = df[valid_boundary_indices].copy()
+
         df.to_csv('clean_sample.csv',index=False)
 
         artifact = wandb.Artifact(
