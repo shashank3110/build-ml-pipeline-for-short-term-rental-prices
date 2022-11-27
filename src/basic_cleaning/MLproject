@@ -1,0 +1,35 @@
+name: basic_cleaning
+python_env: python_env.yml
+
+entry_points:
+  main:
+    parameters:
+
+      input_artifact:
+        description: name of the input data file with version
+        type: string
+
+      output_artifact:
+        description: file name for cleaned output data
+        type: string
+
+      output_type:
+        description: output artifact type
+        type: string
+
+      output_description:
+        description: output artifact description
+        type: string
+
+      min_price:
+        description: min. price filter
+        type: float
+
+      max_price:
+        description: max. price filter
+        type: float
+
+
+    command: >-
+        python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type} 
+        --output_description {output_description} --min_price {min_price}  --max_price {max_price}

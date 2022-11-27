@@ -1,9 +1,16 @@
+'''
+Unit test script for input data.
+'''
+
 import pandas as pd
 import numpy as np
 import scipy.stats
 
 
-def test_column_names(data):
+def test_column_names(data: pd.DataFrame):
+    '''
+    Validate column names in the cleaned data.
+    '''
 
     expected_colums = [
         "id",
@@ -30,7 +37,10 @@ def test_column_names(data):
     assert list(expected_colums) == list(these_columns)
 
 
-def test_neighborhood_names(data):
+def test_neighborhood_names(data: pd.DataFrame):
+    '''
+    Check values for "neighbourhood_group" attribute in the input data.
+    '''
 
     known_names = ["Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"]
 
@@ -59,7 +69,19 @@ def test_similar_neigh_distrib(data: pd.DataFrame, ref_data: pd.DataFrame, kl_th
 
     assert scipy.stats.entropy(dist1, dist2, base=2) < kl_threshold
 
-
 ########################################################
 # Implement here test_row_count and test_price_range   #
 ########################################################
+
+def test_row_count(data: pd.DataFrame):
+    '''
+    Check if dataset size is sufficiently large enough but not too large.
+    '''
+    assert 15000 < data.shape[0] < 1000000
+
+def test_price_range(data: pd.DataFrame, min_price: float, max_price: float):
+    '''
+    Test the price range filtering if it lies in the specified range.
+    '''
+    assert data['price'].between(min_price,max_price).all()
+

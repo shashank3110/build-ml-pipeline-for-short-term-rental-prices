@@ -1,0 +1,12 @@
+python: "3.9.0"
+
+build_dependencies:
+  - pip==22.3.1
+
+dependencies:
+  - jupyterlab
+  - seaborn
+  - pandas
+  - pandas-profiling
+  - pyarrow
+  - wandb

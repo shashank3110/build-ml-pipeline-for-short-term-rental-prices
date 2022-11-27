@@ -1,3 +1,7 @@
+'''
+Perform feature engineering.
+for ex: add time delta feature
+'''
 import pandas as pd
 import numpy as np
 

@@ -7,8 +7,10 @@ import logging
 import os
 
 import wandb
+import sys
+# sys.path.append('components/')
+# from wandb_utils.log_artifact import log_artifact # commenting as it is not detecting wandb_utils even with sys path add
 
-from wandb_utils.log_artifact import log_artifact
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -16,18 +18,39 @@ logger = logging.getLogger()
 
 def go(args):
 
-    run = wandb.init(job_type="download_file")
-    run.config.update(args)
+    # run = wandb.init(job_type="download_file")
+    # run.config.update(args)
 
-    logger.info(f"Returning sample {args.sample}")
-    logger.info(f"Uploading {args.artifact_name} to Weights & Biases")
-    log_artifact(
+    # logger.info(f"Returning sample {args.sample}")
+    # logger.info(f"Uploading {args.artifact_name} to Weights & Biases")
+    # log_artifact(
+    #     args.artifact_name,
+    #     args.artifact_type,
+    #     args.artifact_description,
+    #     os.path.join("data", args.sample),
+    #     run,
+    # )
+
+    with wandb.init(job_type="download_file") as run:
+        run.config.update(args)
+        logger.info(f"Returning sample {args.sample}")
+        logger.info(f"Uploading {args.artifact_name} to Weights & Biases")
+        
+        artifact = wandb.Artifact(
         args.artifact_name,
-        args.artifact_type,
-        args.artifact_description,
-        os.path.join("data", args.sample),
-        run,
-    )
+        type=args.artifact_type,
+        description=args.artifact_description,
+        )
+        artifact.add_file(os.path.join("data", args.sample))
+        run.log_artifact(artifact)
+        # We need to call this .wait() method before we can use the
+        # version below. This will wait until the artifact is loaded into W&B and a
+        # version is assigned
+        artifact.wait()
+
+
+
+
 
 
 if __name__ == "__main__":
